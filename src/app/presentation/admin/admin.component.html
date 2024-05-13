@@ -1,0 +1,40 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    
+    <mat-list>
+      <mat-list-item [routerLink]="['/admin/dashboard']">Inicio</mat-list-item>
+      <mat-list-item [routerLink]="['/admin/categories']">Categorias</mat-list-item>
+      <mat-list-item [routerLink]="['/admin/products']">Productos</mat-list-item>
+      <mat-list-item [routerLink]="['/admin/orders']">Órdenes</mat-list-item>
+      <mat-list-item [routerLink]="['/admin/users']">Usuarios</mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="mat-toolbar-custom">
+      <div>
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>Sistema Administrativo Ecommerce Medano Shopping</span>
+      </div>
+      <div class="user-actions">
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon aria-label="User icon">account_circle</mat-icon>
+          {{ userName }}
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item>Mi Perfil</button>
+          <button mat-menu-item (click)="logout()">Salir</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

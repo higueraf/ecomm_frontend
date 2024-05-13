@@ -1,0 +1,21 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header>
+      <img src="assets/logoMedanoShopping.png" alt="Medano Shopping Logo" width="100">
+      <mat-card-title>Control de Acceso</mat-card-title>
+    </mat-card-header>
+    <form class="login-form">
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <input matInput type="email" class="form-control" [(ngModel)]="userLoginRequestInterface.Email"
+            [ngModelOptions]="{standalone: true}" id="UserName" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="password" class="form-control mb-3" [(ngModel)]="userLoginRequestInterface.Password"
+            [ngModelOptions]="{standalone: true}" id="password" />
+        </mat-form-field>
+      </mat-card-content>
+      <button mat-stroked-button class=".button-blue-1" (click)="login()" class="btn-block">Entrar</button>
+    </form>
+  </mat-card>
+</div>

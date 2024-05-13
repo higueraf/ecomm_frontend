@@ -1,0 +1,63 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Categorias</mat-toolbar>
+    <mat-list>
+      <mat-list-item >Mascotas</mat-list-item>
+      <mat-list-item >Electrónicos</mat-list-item>
+      <mat-list-item >Deportes</mat-list-item>
+      <mat-list-item >Belleza</mat-list-item>
+      <mat-list-item >Juguetes</mat-list-item>
+      <mat-list-item >Hogar</mat-list-item>
+      <mat-list-item >Libros</mat-list-item>
+      <mat-list-item >Ropa</mat-list-item>
+      <mat-list-item >Salud</mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav #cartSidenav class="sidenav" fixedInViewport position="end"
+      [attr.role]="'dialog'"
+      [mode]="'over'"
+      [opened]="false">
+    <mat-toolbar>Carrito</mat-toolbar>
+  </mat-sidenav>
+  
+  <mat-sidenav-content class="main-content">
+    <mat-toolbar color="primary">
+      <img src="assets/logoMedanoShopping.png" alt="Logo" width="40" height="40">
+      <span>Coro Shopping</span>
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <div class="fill-remaining-space"></div>
+      <div class="user-actions">
+        <div class="search-field">
+          <mat-form-field>
+            <input matInput placeholder="Buscar . . .">
+            <button mat-button matSuffix>
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <button mat-icon-button matTooltip="Cart" (click)="cartSidenav.toggle()">
+          <mat-icon aria-label="Cart icon">shopping_cart</mat-icon>
+        </button>
+        <mat-icon aria-label="User icon" class="user-icon">account_circle</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="userName">
+          {{ userName }}
+        </button>
+        <a mat-button *ngIf="!userName" [routerLink]="['/login']">Iniciar Sesión</a>
+        <mat-menu #userMenu="matMenu" >
+          <button mat-menu-item>Mi Cuenta</button>
+          <button mat-menu-item (click)="logout()">Salir</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

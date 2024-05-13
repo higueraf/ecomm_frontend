@@ -1,0 +1,33 @@
+<div fxLayout="column" fxLayoutAlign="center">
+    <mat-card class="card-container">
+        <mat-card-header>
+            <mat-card-title>
+                <h1 *ngIf="modeNew; else editCategoryTitle">Crear Categoría</h1>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <ng-template #editCategoryTitle>
+                <h1>Editar Categoría</h1>
+            </ng-template>
+            <form class="form-container">
+                <div fxLayout="row" fxLayoutGap="30px">
+                    <div fxFlex="50%">
+                        <mat-form-field class="half-width">
+                            <input matInput placeholder="Name" name="name"
+                                [(ngModel)]="productInterface.name">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="30px">
+                    <div fxFlex="50%">
+                        <mat-form-field class="half-width">
+                            <input matInput placeholder="Descripción" name="description"
+                                [(ngModel)]="productInterface.description">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-raised-button class="button-blue-3" (click)="save()">Save</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,44 @@
+<div class="content">
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <h2>Lista de Categorias</h2>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <div>
+            <button mat-button class="button-blue-3" (click)="createCategory()">Crear Categoría</button>
+            <mat-table [dataSource]="categoriesList">
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                    <mat-cell *matCellDef="let category"> {{category.name}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+                    <mat-cell *matCellDef="let category"> {{category.description}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                    <mat-cell *matCellDef="let category">
+                        <button mat-button class="button-blue-1" (click)="updateCategory(category)">Editar</button>
+                        <button mat-button class="button-blue-2" (click)="deleteCategory(category)">Borrar</button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row
+                    *matHeaderRowDef="['name', 'description']"></mat-header-row>
+                <mat-row
+                    *matRowDef="let row; columns: ['name', 'description', 'actions'];"></mat-row>
+
+
+            </mat-table>
+            <mat-paginator [length]="totalRecords" [pageSize]="recordsPerPage" [pageSizeOptions]="[10, 25, 50, 100]"
+                (page)="onPageChange($event)" [showFirstLastButtons]="true">
+            </mat-paginator>
+
+
+            <br />
+        </div>
+    </div>
+
+</div>
