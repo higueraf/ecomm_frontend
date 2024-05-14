@@ -1,11 +1,21 @@
 <div class="content">
 
-    <div fxLayout="row" fxLayoutAlign="center center">
-        <h2>Lista de Categorias</h2>
-    </div>
+    
     <div fxLayout="row" fxLayoutAlign="center center">
         <div>
-            <button mat-button class="button-blue-3" (click)="createCategory()">Crear Categoría</button>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <h2>Listar Categorías</h2>
+            </div>
+            <mat-grid-list cols="2" rowHeight="50px">
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput (input)="onSearch()" [(ngModel)]="getListInterface.TextFilter" placeholder="Buscar...">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile style="text-align: left;">
+                    <button mat-button class="button-blue-3" (click)="createCategory()">Crear Categoría</button>
+                </mat-grid-tile>
+            </mat-grid-list>
             <mat-table [dataSource]="categoriesList">
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
@@ -32,7 +42,7 @@
 
 
             </mat-table>
-            <mat-paginator [length]="totalRecords" [pageSize]="recordsPerPage" [pageSizeOptions]="[10, 25, 50, 100]"
+            <mat-paginator [length]="totalRecords" [pageSize]="getListInterface.NumRecordsPage" [pageSizeOptions]="[10, 25, 50, 100]"
                 (page)="onPageChange($event)" [showFirstLastButtons]="true">
             </mat-paginator>
 

@@ -12,6 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -25,9 +29,13 @@ import { ProductListComponent } from './product-list/product-list.component';
     MatCardModule,
     MatTableModule,
     MatButtonModule,
+    MatGridListModule,
     MatFormFieldModule,
+    MatCheckboxModule,
     MatInputModule,
     MatPaginatorModule,
+    MatIconModule,
+    MatSelectModule,
     FormsModule,
   ]
 })

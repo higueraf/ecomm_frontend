@@ -18,6 +18,9 @@ export class CategoryApiService {
   getCategories(getListInterface: GetListInterface): Observable<CategoryInterface>{
     return this.http.post<CategoryInterface>(this.BASE_URL+"/category", getListInterface);
   }
+  getCategoriesSelect(): Observable<CategoryInterface>{
+    return this.http.get<CategoryInterface>(this.BASE_URL+"/category/Select");
+  }
   getCategoryById(categoryId: string): Observable<CategoryInterface>{
     console.log('categoryId : ', categoryId);
     return this.http.get<CategoryInterface>(this.BASE_URL+"/category/"+categoryId);

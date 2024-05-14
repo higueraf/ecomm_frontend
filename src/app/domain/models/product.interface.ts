@@ -4,7 +4,7 @@ export interface ProductInterface {
   name?: string,
   description?: string,
   stock?: number,
-  image?: string,
+  image?: File | null,
   price?: number,
   categoryId?: string,
   iva?: boolean,

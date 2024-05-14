@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductInterface } from '../../domain/models/product.interface';
@@ -15,7 +15,7 @@ export class ProductApiService {
 
   constructor( private http: HttpClient) {}
 
-  getCategories(getListInterface: GetListInterface): Observable<ProductInterface>{
+  getProducts(getListInterface: GetListInterface): Observable<ProductInterface>{
     return this.http.post<ProductInterface>(this.BASE_URL+"/product", getListInterface);
   }
   getProductById(productId: string): Observable<ProductInterface>{
@@ -24,7 +24,17 @@ export class ProductApiService {
   }
   createProduct(productInterface: ProductInterface): Observable<ProductInterface>{
     delete productInterface.productId;
-    return this.http.post<ProductInterface>(this.BASE_URL+"/product/", productInterface);
+    const headers = new HttpHeaders();
+    const formData = new FormData();
+    formData.append('image', productInterface.image!);
+    formData.append('name', productInterface.name!);
+    formData.append('description', productInterface.description!);
+    formData.append('categoryId', productInterface.categoryId!);
+    formData.append('stock', productInterface.stock?.toString()!);
+    formData.append('price', productInterface.price?.toString()!);
+    formData.append('iva', productInterface.iva ? 'true' : 'false');
+    formData.append('state', '1');
+    return this.http.post<ProductInterface>(this.BASE_URL+"/product/create", formData, { headers: headers });
   }
   updateProduct(productInterface: ProductInterface): Observable<ProductInterface>{
     return this.http.put<ProductInterface>(this.BASE_URL+"/product/update/"+productInterface.productId, productInterface);

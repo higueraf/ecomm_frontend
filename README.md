@@ -1,4 +1,4 @@
-# InternetServiceFront
+# Ecommerce Angular 17
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
 
@@ -32,4 +32,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ng g m user/user --flat
 
 ng g c user/user-form 
-# InternetServiceFront
+# Ecommerce Angular 17

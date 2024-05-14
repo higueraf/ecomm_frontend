@@ -2,19 +2,22 @@
     <mat-card class="card-container">
         <mat-card-header>
             <mat-card-title>
-                <h1 *ngIf="modeNew; else editCategoryTitle">Crear Categoría</h1>
+                <h1 *ngIf="modeNew; else editCategoryTitle">Crear Producto</h1>
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <ng-template #editCategoryTitle>
-                <h1>Editar Categoría</h1>
+                <h1>Editar Producto</h1>
             </ng-template>
             <form class="form-container">
+                <mat-form-field class="half-width">
+                    <input matInput placeholder="Código" name="code" [(ngModel)]="productInterface.code">
+                </mat-form-field>
+
                 <div fxLayout="row" fxLayoutGap="30px">
                     <div fxFlex="50%">
                         <mat-form-field class="half-width">
-                            <input matInput placeholder="Name" name="name"
-                                [(ngModel)]="productInterface.name">
+                            <input matInput placeholder="Nombre" name="name" [(ngModel)]="productInterface.name">
                         </mat-form-field>
                     </div>
                 </div>
@@ -26,7 +29,59 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <button mat-raised-button class="button-blue-3" (click)="save()">Save</button>
+                <div fxLayout="row" fxLayoutGap="30px">
+                    <div fxFlex="50%">
+                        <mat-form-field class="half-width">
+                            <input matInput placeholder="Stock" name="stock" [(ngModel)]="productInterface.stock">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="30px">
+                    <div fxFlex="50%">
+                        <mat-form-field class="half-width">
+                            <input matInput placeholder="Precio" name="price" [(ngModel)]="productInterface.price">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="30px">
+                    <div fxFlex="50%">
+                        <mat-checkbox [checked]="productInterface.iva">
+                            I.V.A.
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="30px">
+                    <mat-form-field class="half-width">
+                        <mat-form-field>
+                            <mat-label>Categoría</mat-label>
+                            <mat-select>
+                                @for (category of categories; track category) {
+                                <mat-option (click)="changeCategoryId(category.categoryId!)"
+                                    [value]="category.categoryId">{{category.name}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="30px">
+                    <input type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)"
+                        #fileUpload>
+
+                    <div class="file-upload">
+
+                        {{fileName || "No file uploaded yet."}}
+
+                        <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                            <mat-icon>attach_file</mat-icon>
+
+                        </button>
+
+                    </div>
+                </div>
+
+                    
+                    <button mat-raised-button class="button-blue-3" (click)="save()">Guardar</button>
             </form>
         </mat-card-content>
     </mat-card>

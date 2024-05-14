@@ -12,10 +12,16 @@ import { ProductApiService } from '@app/infraestructure/driven-adapter/product-a
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent {
-  currentPage = 1;
-  recordsPerPage = 10;
+  getListInterface: GetListInterface = {
+    NumPage: 1,
+    NumRecordsPage: 10,
+    Order: 'desc',
+    Sort: 'ProductId',
+    NumFilter: 0
+  };
+  
   totalRecords = 0;
-  categoriesList: ProductInterface[] = [];
+  productsList: ProductInterface[] = [];
 
   constructor(
     private router: Router,
@@ -23,40 +29,38 @@ export class ProductListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getCategories();
+  }
+  onSearch(event: any) {
+    console.log('onsearch ', event);
+    this.getListInterface.NumFilter = 1;
+    this.getCategories();
   }
 
   createProduct() {
-    this.router.navigate(['/pages/categories/new']);
+    this.router.navigate(['/admin/products/new']);
   }
 
   updateProduct(product: any) {
-    this.router.navigate(['/pages/categories/' + product.productId]);
+    this.router.navigate(['/admin/products/' + product.productId]);
   }
 
   deleteProduct(product: any) {
     this.productApiService.deleteProduct(product.productId).subscribe(() => {
-      this.getProducts();
+      this.getCategories();
     });
   }
 
-  onPageChange(product: PageEvent) {
-    this.currentPage = product.pageIndex + 1;
-    this.recordsPerPage = product.pageSize;
-    this.getProducts();
+  onPageChange(event: PageEvent) {
+    this.getListInterface.NumPage = event.pageIndex + 1;
+    this.getListInterface.NumRecordsPage = event.pageSize;
+    this.getCategories();
   }
 
-  private getProducts() {
-    const getListInterface: GetListInterface = {
-      NumPage: this.currentPage,
-      NumRecordsPage: this.recordsPerPage,
-      Order: 'desc',
-      Sort: 'ProductId',
-    };
-
-    this.productApiService.getCategories(getListInterface).subscribe((productResponse: any) => {
-      this.categoriesList = productResponse.data.items;
-      this.totalRecords = productResponse.data.totalRecords;
+  private getCategories() {
+    this.productApiService.getProducts(this.getListInterface).subscribe((productResponse: any) => {
+      this.productsList = productResponse.data;
+      this.totalRecords = productResponse.totalRecords;
     });
   }
 }

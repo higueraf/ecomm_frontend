@@ -12,8 +12,14 @@ import { CategoryApiService } from '@app/infraestructure/driven-adapter/category
   styleUrls: ['./category-list.component.scss']
 })
 export class CategoryListComponent {
-  currentPage = 1;
-  recordsPerPage = 10;
+  getListInterface: GetListInterface = {
+    NumPage: 1,
+    NumRecordsPage: 10,
+    Order: 'desc',
+    Sort: 'CategoryId',
+    NumFilter: 0
+  };
+  
   totalRecords = 0;
   categoriesList: CategoryInterface[] = [];
 
@@ -25,7 +31,11 @@ export class CategoryListComponent {
   ngOnInit(): void {
     this.getCategories();
   }
-
+  onSearch() {
+    this.getListInterface.NumFilter = 1;
+    this.getCategories();
+  }
+  
   createCategory() {
     this.router.navigate(['/admin/categories/new']);
   }
@@ -40,21 +50,15 @@ export class CategoryListComponent {
     });
   }
 
-  onPageChange(category: PageEvent) {
-    this.currentPage = category.pageIndex + 1;
-    this.recordsPerPage = category.pageSize;
+  onPageChange(event: PageEvent) {
+    this.getListInterface.NumPage = event.pageIndex + 1;
+    this.getListInterface.NumRecordsPage = event.pageSize;
     this.getCategories();
   }
+  
 
   private getCategories() {
-    const getListInterface: GetListInterface = {
-      NumPage: this.currentPage,
-      NumRecordsPage: this.recordsPerPage,
-      Order: 'desc',
-      Sort: 'CategoryId',
-    };
-
-    this.categoryApiService.getCategories(getListInterface).subscribe((categoryResponse: any) => {
+    this.categoryApiService.getCategories(this.getListInterface).subscribe((categoryResponse: any) => {
       this.categoriesList = categoryResponse.data;
       this.totalRecords = categoryResponse.totalRecords;
     });
